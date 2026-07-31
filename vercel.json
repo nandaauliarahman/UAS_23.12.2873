@@ -6,7 +6,10 @@
   "env": {
     "APP_ENV": "production",
     "APP_DEBUG": "false",
+    "APP_KEY": "base64:nyMSZ/k7neUpLcF4/x67IvV0bwD4eoYQr0LuErcSFL4=",
     "APP_URL": "https://uas-23-12-2873.vercel.app",
+    "DB_CONNECTION": "sqlite",
+    "DB_DATABASE": "/tmp/uas-demo.sqlite",
     "LOG_CHANNEL": "stderr",
     "SESSION_DRIVER": "array",
     "CACHE_STORE": "array",
