@@ -7,6 +7,7 @@ $bundledDatabase = __DIR__.'/database.sqlite';
 $_SERVER['HTTPS'] = 'on';
 $_SERVER['SERVER_PORT'] = '443';
 $_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
+$_SERVER['VERCEL'] = '1';
 
 if (! file_exists($runtimeDatabase) && file_exists($bundledDatabase)) {
     copy($bundledDatabase, $runtimeDatabase);
