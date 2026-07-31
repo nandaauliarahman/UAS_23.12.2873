@@ -71,10 +71,7 @@ class CheckoutController extends Controller
 
         // Keep the hosted UAS demo usable without exposing payment credentials.
         if ($serverKey === '') {
-            $this->markAsPaidAndIssueTicket($transaction);
-
-            return redirect()->route('checkout.success', $transaction->order_id)
-                ->with('success', 'Pembayaran demo berhasil. E-Ticket langsung diterbitkan.');
+            return redirect()->route('checkout.payment', $transaction->order_id);
         }
 
         // Konfigurasi Kredensial Environment Midtrans
@@ -122,6 +119,20 @@ class CheckoutController extends Controller
             return view('checkout.success', compact('transaction', 'categories'));
         }
         return view('checkout.payment', compact('transaction', 'categories'));
+    }
+
+    public function demoPay($order_id)
+    {
+        abort_if(trim((string) env('MIDTRANS_SERVER_KEY')) !== '', 404);
+
+        $transaction = Transaction::where('order_id', $order_id)->firstOrFail();
+
+        if (! $transaction->isPaid()) {
+            $this->markAsPaidAndIssueTicket($transaction);
+        }
+
+        return redirect()->route('checkout.success', $transaction->order_id)
+            ->with('success', 'Pembayaran demo berhasil. E-Ticket langsung diterbitkan.');
     }
 
     public function success($order_id)

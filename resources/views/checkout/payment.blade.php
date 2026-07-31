@@ -23,12 +23,25 @@
             <p class="text-xs text-slate-400 mt-2">Order ID: {{ $transaction->order_id }}</p>
         </div>
 
-        <button id="pay-button" class="w-full py-5 bg-indigo-600 text-white rounded-2xl font-black text-xl shadow-xl shadow-indigo-200 hover:bg-indigo-700 transition animate-bounce-in">
-            Bayar Sekarang
-        </button>
+        @if(!env('MIDTRANS_SERVER_KEY'))
+            <div class="mb-6 p-4 bg-amber-100 text-amber-800 rounded-2xl text-sm font-bold text-left">
+                Mode Demo aktif. Pembayaran ini tidak memotong saldo dan hanya mensimulasikan pembayaran berhasil.
+            </div>
+            <form action="{{ route('checkout.demo-pay', $transaction->order_id) }}" method="POST">
+                @csrf
+                <button class="w-full py-5 bg-indigo-600 text-white rounded-2xl font-black text-xl shadow-xl shadow-indigo-200 hover:bg-indigo-700 transition">
+                    Bayar Sekarang (Demo)
+                </button>
+            </form>
+        @else
+            <button id="pay-button" class="w-full py-5 bg-indigo-600 text-white rounded-2xl font-black text-xl shadow-xl shadow-indigo-200 hover:bg-indigo-700 transition animate-bounce-in">
+                Bayar Sekarang
+            </button>
+        @endif
     </div>
 </main>
 
+@if(env('MIDTRANS_SERVER_KEY'))
 <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>
 <script type="text/javascript">
 document.getElementById('pay-button').onclick = function () {
@@ -49,6 +62,7 @@ window.onload = function() {
     document.getElementById('pay-button').click();
 }
 </script>
+@endif
 
 <style>
 @keyframes bounce-in {

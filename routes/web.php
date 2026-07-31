@@ -29,6 +29,7 @@ Route::post('/logout', [SocialAuthController::class, 'logout'])->name('logout');
 Route::get('/checkout/{event}', [CheckoutController::class, 'create'])->name('checkout.create');
 Route::post('/checkout/{event}', [CheckoutController::class, 'store'])->name('checkout.store');
 Route::get('/payment/{order_id}', [CheckoutController::class, 'payment'])->name('checkout.payment');
+Route::post('/payment/{order_id}/demo', [CheckoutController::class, 'demoPay'])->name('checkout.demo-pay');
 Route::get('/success/{order_id}', [CheckoutController::class, 'success'])->name('checkout.success');
 
 Route::post('/midtrans/callback', [MidtransWebhookController::class, 'handle'])->name('midtrans.callback');
