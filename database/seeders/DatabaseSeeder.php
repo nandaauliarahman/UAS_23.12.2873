@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             'category_id' => $category2->id,
             'title' => 'Jazz Night 2026',
             'description' => 'Nikmati malam yang indah dengan alunan musik jazz yang merdu.',
-            'date' => '2026-05-10 19:00:00',
+            'date' => '2026-08-10 19:00:00', 
             'location' => 'Amikom Baru',
             'price' => 50000,
             'stock' => 100,
@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
             'category_id' => $category->id,
             'title' => 'Hackathon - Unleash Your Inner Developer',
             'description' => 'Ayo asah skill coding kamu dan ciptakan solusi inovatif!',
-            'date' => '2026-05-05 10:00:00',
+            'date' => '2026-08-05 10:00:00',
             'location' => 'Inkubator Amikom',
             'price' => 50000,
             'stock' => 100,
@@ -57,11 +57,38 @@ class DatabaseSeeder extends Seeder
             'category_id' => $category->id,
             'title' => 'AI & Future Tech Summit 2026',
             'description' => 'Jelajahi tren terkini dalam kecerdasan buatan.',
-            'date' => '2026-05-01 13:00:00',
+            'date' => '2026-08-01 13:00:00',
             'location' => 'Cinema Unit 6',
             'price' => 50000,
             'stock' => 100,
             'poster_path' => null,
+        ]);
+
+        \App\Models\Event::create([
+            'category_id' => $category->id,
+            'title' => 'Sharing Session Gratis: Digital Business Starter',
+            'description' => 'Event gratis untuk mendemokan bypass pembayaran dan penerbitan e-ticket instan.',
+            'date' => '2026-08-12 09:00:00',
+            'location' => 'Ruang Seminar Amikom',
+            'price' => 0,
+            'stock' => 75,
+            'poster_path' => null,
+        ]);
+
+        \App\Models\Coupon::create([
+            'code' => 'MAHASISWA50',
+            'description' => 'Diskon 50% untuk mahasiswa',
+            'type' => 'percent',
+            'value' => 50,
+            'is_active' => true,
+        ]);
+
+        \App\Models\Coupon::create([
+            'code' => 'HEMAT10000',
+            'description' => 'Potongan langsung Rp 10.000',
+            'type' => 'fixed',
+            'value' => 10000,
+            'is_active' => true,
         ]);
 
         // 4. Panggil PartnerSeeder

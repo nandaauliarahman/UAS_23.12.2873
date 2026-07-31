@@ -10,7 +10,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = ['name', 'email', 'password', 'role'];
+    protected $fillable = ['name', 'email', 'password', 'role' , 'google_id', 'avatar', 'tenant_id'];
 
     protected $hidden = ['password', 'remember_token'];
 
@@ -20,5 +20,19 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class);
+    }
+
+    public function isSuperadmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isOrganizer(): bool
+    {
+        return $this->role === 'organizer';
     }
 }

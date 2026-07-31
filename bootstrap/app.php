@@ -11,7 +11,18 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\AdminMiddleware::class,
+            'organizer' => \App\Http\Middleware\OrganizerMiddleware::class,
+        ]);
+
+        // Kalau belum login, arahkan ke halaman login ADMIN (bukan /login bawaan Laravel)
+        $middleware->redirectGuestsTo(fn () => route('admin.login'));
+
+        // Webhook Midtrans dikirim dari server luar (tanpa token sesi kita)
+        $middleware->validateCsrfTokens(except: [
+            'midtrans/callback',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
