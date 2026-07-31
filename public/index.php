@@ -2,7 +2,6 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\URL;
 
 define('LARAVEL_START', microtime(true));
 
@@ -17,9 +16,5 @@ require __DIR__.'/../vendor/autoload.php';
 // Bootstrap Laravel and handle the request...
 /** @var Application $app */
 $app = require_once __DIR__.'/../bootstrap/app.php';
-
-if (($_SERVER['VERCEL'] ?? null) === '1') {
-    URL::forceScheme('https');
-}
 
 $app->handleRequest(Request::capture());
