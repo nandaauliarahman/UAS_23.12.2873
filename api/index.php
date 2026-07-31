@@ -4,6 +4,10 @@
 $runtimeDatabase = '/tmp/uas-demo.sqlite';
 $bundledDatabase = __DIR__.'/database.sqlite';
 
+$_SERVER['HTTPS'] = 'on';
+$_SERVER['SERVER_PORT'] = '443';
+$_SERVER['HTTP_X_FORWARDED_PROTO'] = 'https';
+
 if (! file_exists($runtimeDatabase) && file_exists($bundledDatabase)) {
     copy($bundledDatabase, $runtimeDatabase);
 }
