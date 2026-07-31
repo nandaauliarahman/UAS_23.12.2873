@@ -2,6 +2,11 @@
 @section('title', 'Pembayaran Berhasil')
 @section('content')
 <main class="max-w-3xl mx-auto px-6 py-20 text-center">
+    @if(session('success'))
+        <div class="mb-6 p-4 bg-green-100 text-green-700 rounded-xl font-bold">
+            {{ session('success') }}
+        </div>
+    @endif
     <div class="bg-white rounded-3xl border border-slate-200 p-12 shadow-sm inline-block w-full max-w-md">
         <div class="w-24 h-24 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">

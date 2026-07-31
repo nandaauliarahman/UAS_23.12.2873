@@ -67,8 +67,18 @@ class CheckoutController extends Controller
 
         // --- INTEGRASI SNAP MIDTRANS ---
 
+        $serverKey = trim((string) env('MIDTRANS_SERVER_KEY'));
+
+        // Keep the hosted UAS demo usable without exposing payment credentials.
+        if ($serverKey === '') {
+            $this->markAsPaidAndIssueTicket($transaction);
+
+            return redirect()->route('checkout.success', $transaction->order_id)
+                ->with('success', 'Pembayaran demo berhasil. E-Ticket langsung diterbitkan.');
+        }
+
         // Konfigurasi Kredensial Environment Midtrans
-        \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
+        \Midtrans\Config::$serverKey = $serverKey;
         \Midtrans\Config::$isProduction = false; // Mode Sandbox!
         \Midtrans\Config::$isSanitized = true;
         \Midtrans\Config::$is3ds = true;
@@ -120,6 +130,10 @@ class CheckoutController extends Controller
         $categories = \App\Models\Category::all();
 
         $transaction = Transaction::with('event')->where('order_id', $order_id)->firstOrFail();
+
+        if (trim((string) env('MIDTRANS_SERVER_KEY')) === '') {
+            return view('checkout.success', compact('transaction', 'categories'));
+        }
 
         // Konfigurasi Midtrans untuk mengecek status transaksi langsung ke API
         \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
