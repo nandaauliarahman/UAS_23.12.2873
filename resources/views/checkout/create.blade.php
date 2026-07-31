@@ -29,8 +29,7 @@
         <div class="grid grid-cols-1 gap-8">
             <!-- Summary Card -->
             <div class="bg-white rounded-3xl border border-slate-200 p-8 shadow-sm">
-                @auth
-    @if(auth()->user()->role === 'user')
+                @if(auth()->check() && auth()->user()->role === 'user')
         <div class="flex items-center gap-4 mb-8 p-4 bg-indigo-50 rounded-2xl">
             <img src="{{ auth()->user()->avatar ?? 'https://ui-avatars.com/api/?name='.urlencode(auth()->user()->name).'&background=6366f1&color=fff' }}"
                 class="w-12 h-12 rounded-full object-cover border-2 border-white shadow">
@@ -39,8 +38,7 @@
                 <p class="font-bold text-slate-800">{{ auth()->user()->name }}</p>
             </div>
         </div>
-    @endif
-@else
+                @else
     <a href="{{ route('social.google.redirect', ['redirect' => route('checkout.create', $event->id)]) }}"
         class="flex items-center justify-center gap-3 w-full py-4 mb-4 bg-white border-2 border-slate-200 rounded-2xl font-bold hover:border-indigo-600 hover:text-indigo-600 transition shadow-sm">
         <svg class="w-5 h-5" viewBox="0 0 24 24">
@@ -56,7 +54,7 @@
         <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">atau isi manual</span>
         <div class="flex-1 h-px bg-slate-200"></div>
     </div>
-@endauth
+                @endif
                 <h3 class="text-xl font-bold mb-6 border-b pb-4">Pesanan Anda</h3>
                 <div class="flex gap-6 items-start">
                     <img src="{{ ($event->poster_path && \Illuminate\Support\Facades\Storage::disk('public')->exists($event->poster_path))

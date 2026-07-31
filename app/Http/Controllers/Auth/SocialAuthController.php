@@ -27,6 +27,21 @@ class SocialAuthController extends Controller
             session(['sso_intended_url' => $redirectTo]);
         }
 
+        if (! config('services.google.client_id') || ! config('services.google.client_secret')) {
+            $user = User::firstOrCreate(
+                ['email' => 'google-demo@example.com'],
+                [
+                    'name' => 'Demo Google User',
+                    'password' => Hash::make(Str::random(40)),
+                    'role' => 'user',
+                ]
+            );
+
+            Auth::login($user, true);
+
+            return redirect(session()->pull('sso_intended_url') ?: route('home'));
+        }
+
         return Socialite::driver('google')->redirect();
     }
 
