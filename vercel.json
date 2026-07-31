@@ -10,11 +10,11 @@
   },
   "routes": [
     {
-      "handle": "filesystem"
+      "src": "/((?!build/|assets/|favicon\\.ico$|robots\\.txt$|manifest\\.webmanifest$|service-worker\\.js$).*)",
+      "dest": "/api/index.php"
     },
     {
-      "src": "/(.*)",
-      "dest": "/api/index.php"
+      "handle": "filesystem"
     }
   ]
 }
